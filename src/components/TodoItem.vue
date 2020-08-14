@@ -1,13 +1,13 @@
 <template>
   <div>
     <div>
-      <p class="todo-style" :id="id">
+      <p :class="{ completed: completed }" class="todo-style" :id="id">
         <span>
           <input
             type="checkbox"
             :id="id"
-            :checked="isDone"
-            @change="$emit('mark-done')"
+            :checked="isCompleted"
+            @change="$emit('mark-complete')"
           />
           {{ todo }}
         </span>
@@ -37,11 +37,11 @@ export default {
   props: {
     id: { type: String },
     todo: { type: String },
-    isCompleted: { type: Boolean },
+    completed: { type: Boolean },
   },
   data() {
     return {
-      isDone: this.isCompleted,
+      isCompleted: this.isCompleted,
     };
   },
   methods: {
@@ -59,6 +59,7 @@ p {
   padding: 16px 24px;
   margin-bottom: 8px;
   background-color: #f6f8fa;
+  font-size: 16px;
 }
 .completed {
   text-decoration: line-through solid red;
@@ -67,12 +68,10 @@ p {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  /* align-content: center; */
 }
 .delete-button {
   background: #e8e8e8;
   height: 16px;
-  /* padding: 4px 4px; */
 }
 .delete-icon {
   padding: 6px 5px 2px 5px;
