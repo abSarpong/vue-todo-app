@@ -1,10 +1,15 @@
 <template>
   <div>
     <div>
-      <p :class="{'completed':todo.isCompleted}" class="todo-style">
+      <p class="todo-style" :id="id">
         <span>
-          <input type="checkbox" @change="markComplete" />
-          {{todo.todo}}
+          <input
+            type="checkbox"
+            :id="id"
+            :checked="isDone"
+            @change="$emit('mark-done')"
+          />
+          {{ todo }}
         </span>
         <span class="delete-icon">
           <svg
@@ -12,7 +17,7 @@
             viewBox="0 0 20 20"
             fill="#333333"
             style="width: 16px"
-            @click="$emit('delete-todo', todo.id)"
+            @click="deleteTodo"
           >
             <path
               fill-rule="evenodd"
@@ -29,17 +34,25 @@
 <script>
 export default {
   name: "TodoItem",
-  props: ["todo"],
+  props: {
+    id: { type: String },
+    todo: { type: String },
+    isCompleted: { type: Boolean },
+  },
+  data() {
+    return {
+      isDone: this.isCompleted,
+    };
+  },
   methods: {
-    markComplete: function () {
-      this.todo.isCompleted = !this.todo.isCompleted;
-      console.log(this.todo.id);
+    deleteTodo: function() {
+      this.$emit("delete-todo");
     },
   },
 };
 </script>
 
-<style >
+<style>
 p {
   text-decoration: none;
   list-style-type: none;
