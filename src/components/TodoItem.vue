@@ -33,7 +33,6 @@ export default {
   methods: {
     markComplete: function () {
       this.todo.isCompleted = !this.todo.isCompleted;
-      console.log(this.todo.id);
     },
   },
 };
