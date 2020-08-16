@@ -3,12 +3,7 @@
     <div>
       <p :class="{ completed: completed }" class="todo-style" :id="id">
         <span>
-          <input
-            type="checkbox"
-            :id="id"
-            :checked="isCompleted"
-            @change="$emit('mark-complete')"
-          />
+          <input type="checkbox" :id="id" :checked="isCompleted" @change="$emit('mark-complete')" />
           {{ todo }}
         </span>
         <span>
@@ -18,7 +13,7 @@
               viewBox="0 0 20 20"
               fill="#3867d6"
               style="width: 16px"
-              @click="editTodo"
+              @click="toggleForm"
             >
               <path
                 d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"
@@ -54,17 +49,20 @@ export default {
     todo: { type: String },
     completed: { type: Boolean },
   },
-  data() {
-    return {
-      isCompleted: this.isCompleted,
-    };
-  },
   methods: {
-    deleteTodo: function() {
+    deleteTodo() {
       this.$emit("delete-todo");
     },
-    editTodo: function() {
+    editTodo() {
       this.$emit("edit-todo");
+    },
+    toggleForm() {
+      this.$emit("toggle-todo-forms");
+    },
+  },
+  computed: {
+    isCompleted() {
+      return this.completed;
     },
   },
 };
