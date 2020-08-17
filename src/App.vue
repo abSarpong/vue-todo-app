@@ -4,7 +4,7 @@
       <div v-if="!isEditing">
         <add-to-do @add-new-todo="addTodo"></add-to-do>
         <div v-if="todoCount">
-          <div v-for="{id, todo, completed} in todos" :key="id">
+          <div v-for="{ id, todo, completed } in todos" :key="id">
             <todo-item
               :id="id"
               :todo="todo"
@@ -31,12 +31,21 @@
                 d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
               />
             </svg>
-            <h2 style="color: #616161; font-weight: 500">No Todos Available Yet</h2>
-            <span style="color: #7a7a7a; font-size: 14px">Todos you input will show up here.</span>
+            <h2 style="color: #616161; font-weight: 500">
+              No Todos Available Yet
+            </h2>
+            <span style="color: #7a7a7a; font-size: 14px"
+              >Todos you input will show up here.</span
+            >
           </div>
         </div>
       </div>
-      <edit-to-do @edit-todo="editTodo" @cancel-edit="editCancelled" :isEditing="isEditing" v-else></edit-to-do>
+      <edit-to-do
+        @edit-todo="editTodo"
+        @cancel-edit="editCancelled"
+        :isEditing="isEditing"
+        v-else
+      ></edit-to-do>
     </div>
   </div>
 </template>
@@ -45,8 +54,9 @@
 import AddToDo from "./components/AddToDo.vue";
 import TodoItem from "./components/TodoItem.vue";
 import EditToDo from "./components/EditToDo.vue";
+import axios from "axios";
 
-import uniqueId from "lodash.uniqueid";
+// import uniqueId from "lodash.uniqueid";
 
 export default {
   name: "App",
@@ -57,17 +67,30 @@ export default {
   },
   data() {
     return {
-      todos: [{ id: "0", todo: "Do something", completed: false }],
+      todos: [],
       isEditing: false,
     };
   },
+  mounted() {
+    axios
+      .get("https://jsonplaceholder.typicode.com/todos?_limit=4")
+      .then((res) => (this.todos = res.data))
+      .catch((error) => console.log(error));
+  },
   methods: {
-    addTodo(todo) {
-      this.todos.push({
-        id: uniqueId(),
-        todo: todo,
-        completed: false,
-      });
+    addTodo(newTodo) {
+      const { todo, completed } = newTodo;
+      axios
+        .post("https://jsonplaceholder.typicode.com/todos", {
+          todo,
+          completed,
+        })
+        .then((res) => this.todos.push(res.data));
+      // this.todos.push({
+      //   id: uniqueId(),
+      //   todo: todo,
+      //   completed: false,
+      // });
     },
     markComplete(id) {
       const todoItemId = this.todos.find((item) => item.id === id);

@@ -3,7 +3,12 @@
     <div>
       <p :class="{ completed: completed }" class="todo-style" :id="id">
         <span>
-          <input type="checkbox" :id="id" :checked="isCompleted" @change="$emit('mark-complete')" />
+          <input
+            type="checkbox"
+            :id="id"
+            :checked="isCompleted"
+            @change="$emit('mark-complete')"
+          />
           {{ todo }}
         </span>
         <span>
@@ -45,7 +50,7 @@
 export default {
   name: "TodoItem",
   props: {
-    id: { type: String },
+    id: { type: Number },
     todo: { type: String },
     completed: { type: Boolean },
   },
