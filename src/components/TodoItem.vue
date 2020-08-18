@@ -42,7 +42,7 @@
       <form @submit.prevent="onSubmit" action>
         <div class="form-style">
           <div>
-            <span style="font-size: 22px; color: #0088f1" @click="editCancelled">
+            <span class="cancel-link" @click="cancelEditForm">
               &#8855;
               <span style="font-size: 16px;">Cancel</span>
             </span>
@@ -82,7 +82,7 @@ export default {
       this.isEditing = true;
       console.log(id);
     },
-    editCancelled() {
+    cancelEditForm() {
       this.isEditing = false;
     },
   },
@@ -119,11 +119,18 @@ p {
   padding: 6px 5px 2px 5px;
   background-color: rgb(248, 182, 175, 0.4);
   border-radius: 50%;
+  cursor: pointer;
 }
 .edit-icon {
   padding: 6px 5px 2px 5px;
   background-color: rgba(199, 224, 243, 0.4);
   border-radius: 50%;
   margin-right: 16px;
+  cursor: pointer;
+}
+.cancel-link {
+  font-size: 22px;
+  color: #0088f1;
+  cursor: pointer;
 }
 </style>
