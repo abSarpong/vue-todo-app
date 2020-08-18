@@ -2,7 +2,7 @@
   <div>
     <form @submit.prevent="onSubmit" action>
       <div class="form-style">
-        <input type="text" v-model="todo" placeholder="What's next?" />
+        <input type="text" v-model="title" placeholder="What's next?" />
         <button type="submit" class="primary-button">
           <span style="font-size: 20px">&#43;&nbsp;</span>
           Add ToDo
@@ -13,17 +13,25 @@
 </template>
 
 <script>
+import uniqueId from "lodash.uniqueid";
+
 export default {
   name: "AddToDo",
   data() {
     return {
-      todo: "",
+      title: "",
     };
   },
   methods: {
     onSubmit() {
-      this.$emit("add-new-todo", this.todo);
-      this.todo = "";
+      const newTodo = {
+        id: uniqueId(),
+        title: this.title,
+        completed: false,
+      };
+
+      this.$emit("add-new-todo", newTodo);
+      this.title = "";
     },
   },
 };
