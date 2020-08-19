@@ -13,8 +13,6 @@
 </template>
 
 <script>
-import uniqueId from "lodash.uniqueid";
-
 export default {
   name: "AddToDo",
   data() {
@@ -25,7 +23,6 @@ export default {
   methods: {
     onSubmit() {
       const newTodo = {
-        id: uniqueId(),
         title: this.title,
         completed: false,
       };

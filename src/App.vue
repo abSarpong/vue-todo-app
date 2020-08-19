@@ -11,6 +11,7 @@
             @delete-todo="deleteTodo(id)"
             @mark-complete="markComplete(id)"
             @toggle-todo-forms="toggleEditForm(id)"
+            @add-edited-todo="editTodo(id, $event)"
           />
         </div>
       </div>
@@ -30,8 +31,12 @@
               d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
             />
           </svg>
-          <h2 style="color: #616161; font-weight: 500">No Todos Available Yet</h2>
-          <span style="color: #7a7a7a; font-size: 14px">Todos you input will show up here.</span>
+          <h2 style="color: #616161; font-weight: 500">
+            No Todos Available Yet
+          </h2>
+          <span style="color: #7a7a7a; font-size: 14px"
+            >Todos you input will show up here.</span
+          >
         </div>
       </div>
     </div>
@@ -42,6 +47,7 @@
 import AddToDo from "./components/AddToDo.vue";
 import TodoItem from "./components/TodoItem.vue";
 import axios from "axios";
+// import uniqueId from "lodash.uniqueid";
 
 export default {
   name: "App",
@@ -63,27 +69,31 @@ export default {
   },
   methods: {
     addTodo(newTodo) {
-      const { title, completed } = newTodo;
-      axios
-        .post("https://jsonplaceholder.typicode.com/todos", {
-          title,
-          completed,
-        })
-        .then((res) => (this.todos = [...this.todos, res.data]));
+      this.todos = [...this.todos, newTodo];
+      // this.todos = this.todos.push({
+      //   id: uniqueId(),
+      //   title: newTodo,
+      //   complted: false,
+      // });
+      // const { title, completed } = newTodo;
+      // axios
+      //   .post("https://jsonplaceholder.typicode.com/todos", {
+      //     title,
+      //     completed,
+      //   })
+      //   .then((res) => (this.todos = [...this.todos, res.data]));
     },
     markComplete(id) {
       const todoItemId = this.todos.find((item) => item.id === id);
       todoItemId.completed = !todoItemId.completed;
     },
     deleteTodo(id) {
-      // this.todos = this.todos.filter((todo) => todo.id != id);
       const todoIndex = this.todos.findIndex((item) => item.id === id);
       this.todos.splice(todoIndex, 1);
     },
-    editTodo(id, newTodo) {
-      console.log(id, newTodo, "kk");
+    editTodo(id, title) {
       const todoToEdit = this.todos.find((item) => item.id === id);
-      todoToEdit.todo = newTodo + " yeap";
+      todoToEdit.todo = title;
     },
   },
   computed: {

@@ -3,8 +3,13 @@
     <div v-if="!isEditing">
       <p :class="{ completed: completed }" class="todo-style" :id="id">
         <span>
-          <input type="checkbox" :id="id" :checked="isCompleted" @change="$emit('mark-complete')" />
-          {{ todo }}
+          <input
+            type="checkbox"
+            :id="id"
+            :checked="isCompleted"
+            @change="$emit('mark-complete')"
+          />
+          {{ title }}
         </span>
         <span>
           <span class="edit-icon">
@@ -39,7 +44,7 @@
       </p>
     </div>
     <div v-else :isEditing="isEditing">
-      <form @submit.prevent="onSubmit" action>
+      <form @submit.prevent="onEditSave" action>
         <div class="form-style">
           <div>
             <span class="cancel-link" @click="cancelEditForm">
@@ -47,7 +52,7 @@
               <span style="font-size: 16px;">Cancel</span>
             </span>
           </div>
-          <input type="text" v-model="todo" placeholder="What's next?" />
+          <input type="text" v-model="title" placeholder="What's next?" />
           <button type="submit" class="primary-button">
             <span style="font-size: 20px">&#10003;&nbsp;</span>
             Save ToDo
@@ -68,6 +73,7 @@ export default {
   },
   data() {
     return {
+      title: this.todo,
       isEditing: false,
     };
   },
@@ -75,12 +81,14 @@ export default {
     deleteTodo() {
       this.$emit("delete-todo");
     },
-    editTodo() {
-      this.$emit("edit-todo");
+    onEditSave(newTitle) {
+      if (this.title !== this.todo) {
+        this.$emit("add-edited-todo", newTitle);
+        this.isEditing = false;
+      }
     },
-    toggleEditForm(id) {
+    toggleEditForm() {
       this.isEditing = true;
-      console.log(id);
     },
     cancelEditForm() {
       this.isEditing = false;
