@@ -9,7 +9,7 @@
             :checked="isCompleted"
             @change="$emit('mark-complete')"
           />
-          {{ title }}
+          {{ todo }}
         </span>
         <span>
           <span class="edit-icon">
@@ -52,7 +52,7 @@
               <span style="font-size: 16px;">Cancel</span>
             </span>
           </div>
-          <input type="text" v-model="title" placeholder="What's next?" />
+          <input type="text" v-model="todo" placeholder="What's next?" />
           <button type="submit" class="primary-button">
             <span style="font-size: 20px">&#10003;&nbsp;</span>
             Save ToDo
@@ -68,12 +68,12 @@ export default {
   name: "TodoItem",
   props: {
     id: { type: Number },
-    todo: { type: String },
+    title: { type: String },
     completed: { type: Boolean },
   },
   data() {
     return {
-      title: this.todo,
+      todo: this.title,
       isEditing: false,
     };
   },

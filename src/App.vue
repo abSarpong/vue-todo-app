@@ -6,12 +6,12 @@
         <div v-for="{ id, title, completed } in todos" :key="id">
           <todo-item
             :id="id"
-            :todo="title"
+            :title="title"
             :completed="completed"
             @delete-todo="deleteTodo(id)"
             @mark-complete="markComplete(id)"
             @toggle-todo-forms="toggleEditForm(id)"
-            @add-edited-todo="editTodo(id, $event)"
+            @add-edited-todo="editTodo(id, title)"
           />
         </div>
       </div>
@@ -47,7 +47,7 @@
 import AddToDo from "./components/AddToDo.vue";
 import TodoItem from "./components/TodoItem.vue";
 import axios from "axios";
-// import uniqueId from "lodash.uniqueid";
+import uniqueId from "lodash.uniqueid";
 
 export default {
   name: "App",
@@ -69,19 +69,24 @@ export default {
   },
   methods: {
     addTodo(newTodo) {
-      this.todos = [...this.todos, newTodo];
-      // this.todos = this.todos.push({
-      //   id: uniqueId(),
+      // const sumtin = {
+      //   id: this.todos.length + 1,
       //   title: newTodo,
-      //   complted: false,
+      //   completed: false,
+      // };
+      // this.todos = [...this.todos, sumtin];
+      // this.todos.push({
+      //   id: this.todos.length + 1,
+      //   title: newTodo,
+      //   completed: false,
       // });
-      // const { title, completed } = newTodo;
-      // axios
-      //   .post("https://jsonplaceholder.typicode.com/todos", {
-      //     title,
-      //     completed,
-      //   })
-      //   .then((res) => (this.todos = [...this.todos, res.data]));
+      axios
+        .post("https://jsonplaceholder.typicode.com/todos", {
+          id: uniqueId(),
+          title: newTodo,
+          completed: false,
+        })
+        .then((res) => (this.todos = [...this.todos, res.data]));
     },
     markComplete(id) {
       const todoItemId = this.todos.find((item) => item.id === id);

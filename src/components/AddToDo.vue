@@ -22,12 +22,7 @@ export default {
   },
   methods: {
     onSubmit() {
-      const newTodo = {
-        title: this.title,
-        completed: false,
-      };
-
-      this.$emit("add-new-todo", newTodo);
+      this.$emit("add-new-todo", this.title);
       this.title = "";
     },
   },
