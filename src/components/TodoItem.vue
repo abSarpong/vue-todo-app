@@ -1,14 +1,9 @@
 <template>
   <div>
     <div v-if="!isEditing">
-      <p :class="{ completed: completed }" class="todo-style" :id="id">
-        <span>
-          <input
-            type="checkbox"
-            :id="id"
-            :checked="isCompleted"
-            @change="$emit('mark-complete')"
-          />
+      <div :class="{ completed: completed }" class="todo-style" :id="id">
+        <span class="break-point">
+          <input type="checkbox" :id="id" :checked="isCompleted" @change="$emit('mark-complete')" />
           {{ todo }}
         </span>
         <span>
@@ -41,7 +36,7 @@
             </svg>
           </span>
         </span>
-      </p>
+      </div>
     </div>
     <div v-else :isEditing="isEditing">
       <form @submit.prevent="onEditSave" action>
@@ -104,11 +99,6 @@ export default {
 
 <style>
 p {
-  text-decoration: none;
-  list-style-type: none;
-  padding: 16px 24px;
-  margin-bottom: 8px;
-  background-color: #f6f8fa;
   font-size: 16px;
 }
 .completed {
@@ -118,6 +108,13 @@ p {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  margin-bottom: 8px;
+  background-color: #f6f8fa;
+}
+.break-point {
+  width: 360px;
 }
 .delete-button {
   background: #e8e8e8;
@@ -140,5 +137,10 @@ p {
   font-size: 22px;
   color: #0088f1;
   cursor: pointer;
+}
+
+/* media queries */
+.break-point {
+  width: 200px;
 }
 </style>

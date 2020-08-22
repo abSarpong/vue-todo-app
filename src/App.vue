@@ -31,12 +31,8 @@
               d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
             />
           </svg>
-          <h2 style="color: #616161; font-weight: 500">
-            No Todos Available Yet
-          </h2>
-          <span style="color: #7a7a7a; font-size: 14px"
-            >Todos you input will show up here.</span
-          >
+          <h2 style="color: #616161; font-weight: 500">No Todos Available Yet</h2>
+          <span style="color: #7a7a7a; font-size: 14px">Todos you input will show up here.</span>
         </div>
       </div>
     </div>
@@ -123,5 +119,12 @@ export default {
   justify-content: center;
   text-align: center;
   padding-top: 100px;
+}
+
+/* media queries */
+@media only screen and (max-width: 600px) {
+  .wrapper {
+    width: 380px;
+  }
 }
 </style>

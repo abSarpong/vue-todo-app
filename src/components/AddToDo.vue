@@ -55,7 +55,6 @@ input[type="text"] {
   font-weight: 600;
   height: 57px;
   width: 140px;
-  border-top-right-radius: 50px;
-  border-bottom-right-radius: 50px;
+  margin-bottom: 24px;
 }
 </style>
