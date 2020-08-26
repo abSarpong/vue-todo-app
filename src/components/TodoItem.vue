@@ -3,12 +3,7 @@
     <div v-if="!isEditing">
       <p :class="{ completed: completed }" class="todo-style" :id="id">
         <span>
-          <input
-            type="checkbox"
-            :id="id"
-            :checked="isCompleted"
-            @change="$emit('mark-complete')"
-          />
+          <input type="checkbox" :id="id" :checked="isCompleted" @change="$emit('mark-complete')" />
           {{ todo }}
         </span>
         <span>
@@ -45,19 +40,13 @@
     </div>
     <div v-else :isEditing="isEditing">
       <form @submit.prevent="onEditSave" action>
-        <div class="form-style">
-          <div>
-            <span class="cancel-link" @click="cancelEditForm">
-              &#8855;
-              <span style="font-size: 16px;">Cancel</span>
-            </span>
-          </div>
-          <input type="text" v-model="todo" placeholder="What's next?" />
-          <button type="submit" class="primary-button">
-            <span style="font-size: 20px">&#10003;&nbsp;</span>
-            Save ToDo
-          </button>
-        </div>
+        <br />
+        <input type="text" v-model="todo" />
+        <button type="submit" class="primary-button">Update</button>
+        <button @click="cancelEditForm" type="submit" class="secondary-button">
+          <span style="font-size: 20px"></span>
+          Cancel
+        </button>
       </form>
     </div>
   </div>
@@ -67,7 +56,7 @@
 export default {
   name: "TodoItem",
   props: {
-    id: { type: Number },
+    id: { type: String },
     title: { type: String },
     completed: { type: Boolean },
   },

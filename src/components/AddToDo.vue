@@ -3,10 +3,7 @@
     <form @submit.prevent="onSubmit" action>
       <div class="form-style">
         <input type="text" v-model="title" placeholder="What's next?" />
-        <button type="submit" class="primary-button">
-          <span style="font-size: 20px">&#43;&nbsp;</span>
-          Add ToDo
-        </button>
+        <button type="submit" class="primary-button">Add</button>
       </div>
     </form>
   </div>
@@ -55,7 +52,14 @@ input[type="text"] {
   font-weight: 600;
   height: 57px;
   width: 140px;
-  border-top-right-radius: 50px;
-  border-bottom-right-radius: 50px;
+}
+.secondary-button {
+  padding: 8px 12px;
+  font-size: 16px;
+  color: #707070;
+  border: none;
+  font-weight: 600;
+  height: 57px;
+  width: 140px;
 }
 </style>
