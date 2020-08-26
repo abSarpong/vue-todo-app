@@ -40,6 +40,9 @@ input[type="text"] {
   border: 1px solid #cccccc;
   height: 40px;
 }
+.edit-form-style {
+  margin-bottom: 16px;
+}
 ::placeholder {
   font-size: 16px;
   color: #a3a3a3;

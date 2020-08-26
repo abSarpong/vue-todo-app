@@ -106,4 +106,11 @@ export default {
   text-align: center;
   padding-top: 100px;
 }
+
+/* media queries */
+@media only screen and (max-width: 600px) {
+  .wrapper {
+    width: 380px;
+  }
+}
 </style>
