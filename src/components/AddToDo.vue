@@ -3,9 +3,7 @@
     <form @submit.prevent="onSubmit" action>
       <div class="form-style">
         <input type="text" v-model="newTodo" placeholder="What's next?" />
-        <button type="submit" class="primary-button">
-          + Add ToDo
-        </button>
+        <button type="submit" class="primary-button">Add</button>
       </div>
     </form>
   </div>
@@ -20,7 +18,7 @@ export default {
     };
   },
   methods: {
-    onSubmit: function() {
+    onSubmit: function () {
       this.$emit("add-new-todo", this.newTodo);
       this.newTodo = "";
     },
@@ -41,19 +39,9 @@ input[type="text"] {
   width: 300px;
   border: 1px solid #cccccc;
   height: 40px;
-  border-top-left-radius: 50px;
-  border-bottom-left-radius: 50px;
 }
-input[type="text"]:focus {
-  margin: 8px 0 16px 0px;
-  padding: 8px 25px;
-  font-size: 20px;
-  margin-right: 8px;
-  width: 300px;
-  border: 1px solid #cccccc;
-  height: 40px;
-  border-top-left-radius: 50px;
-  border-bottom-left-radius: 50px;
+.edit-form-style {
+  margin-bottom: 16px;
 }
 ::placeholder {
   font-size: 16px;
@@ -67,7 +55,14 @@ input[type="text"]:focus {
   font-weight: 600;
   height: 57px;
   width: 140px;
-  border-top-right-radius: 50px;
-  border-bottom-right-radius: 50px;
+}
+.secondary-button {
+  padding: 8px 12px;
+  font-size: 16px;
+  color: #707070;
+  border: none;
+  font-weight: 600;
+  height: 57px;
+  width: 140px;
 }
 </style>

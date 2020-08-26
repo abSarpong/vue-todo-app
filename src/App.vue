@@ -3,13 +3,15 @@
     <div class="wrapper">
       <add-to-do @add-new-todo="addTodo"></add-to-do>
       <div v-if="todoCount">
-        <div v-for="todo in todos" :key="todo.id">
+        <div v-for="{ id, title, completed } in todos" :key="id">
           <todo-item
-            :id="todo.id"
-            :todo="todo.todo"
-            :completed="todo.completed"
-            @delete-todo="deleteTodo(todo.id)"
-            @mark-complete="markComplete(todo.id)"
+            :id="id"
+            :title="title"
+            :completed="completed"
+            @delete-todo="deleteTodo(id)"
+            @mark-complete="markComplete(id)"
+            @toggle-todo-forms="toggleEditForm(id)"
+            @add-edited-todo="editTodo(id, title)"
           />
         </div>
       </div>
@@ -29,10 +31,8 @@
               d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
             />
           </svg>
-          <h1 style="color: #616161; font-weight: 500">
-            No Todos Available Yet
-          </h1>
-          <span style="color: #7a7a7a">Todos you input will show up here.</span>
+          <h2 style="color: #616161; font-weight: 500">No Todos Available Yet</h2>
+          <span style="color: #7a7a7a; font-size: 14px">Todos you input will show up here.</span>
         </div>
       </div>
     </div>
@@ -42,9 +42,8 @@
 <script>
 import AddToDo from "./components/AddToDo.vue";
 import TodoItem from "./components/TodoItem.vue";
-
+import axios from "axios";
 import uniqueId from "lodash.uniqueid";
-
 export default {
   name: "App",
   components: {
@@ -54,29 +53,51 @@ export default {
   data() {
     return {
       todos: [],
+      isEditing: false,
     };
   },
+  created() {
+    axios
+      .get("https://jsonplaceholder.typicode.com/todos?_limit=4")
+      .then((res) => (this.todos = res.data))
+      .catch((error) => console.log(error));
+  },
   methods: {
-    addTodo: function(newTodo) {
-      this.todos.push({
-        id: uniqueId(),
-        todo: newTodo,
-        completed: false,
-      });
+    addTodo(newTodo) {
+      // const sumtin = {
+      //   id: this.todos.length + 1,
+      //   title: newTodo,
+      //   completed: false,
+      // };
+      // this.todos = [...this.todos, sumtin];
+      // this.todos.push({
+      //   id: this.todos.length + 1,
+      //   title: newTodo,
+      //   completed: false,
+      // });
+      axios
+        .post("https://jsonplaceholder.typicode.com/todos", {
+          id: uniqueId(),
+          title: newTodo,
+          completed: false,
+        })
+        .then((res) => (this.todos = [...this.todos, res.data]));
     },
-    markComplete: function(id) {
+    markComplete(id) {
       const todoItemId = this.todos.find((item) => item.id === id);
       todoItemId.completed = !todoItemId.completed;
     },
-    deleteTodo: function(id) {
-      // this.todos = this.todos.filter((todo) => todo.id != id);
+    deleteTodo(id) {
       const todoIndex = this.todos.findIndex((item) => item.id === id);
       this.todos.splice(todoIndex, 1);
     },
-    editTodo: function() {},
+    editTodo(id, title) {
+      const todoToEdit = this.todos.find((item) => item.id === id);
+      todoToEdit.todo = title;
+    },
   },
   computed: {
-    todoCount: function() {
+    todoCount() {
       return this.todos.length;
     },
   },
@@ -97,5 +118,11 @@ export default {
   justify-content: center;
   text-align: center;
   padding-top: 100px;
+}
+/* media queries */
+@media only screen and (max-width: 600px) {
+  .wrapper {
+    width: 380px;
+  }
 }
 </style>
