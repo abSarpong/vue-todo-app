@@ -42,7 +42,7 @@
 <script>
 import AddToDo from "./components/AddToDo.vue";
 import TodoItem from "./components/TodoItem.vue";
-import uniqueId from "lodash.uniqueid";
+// import uniqueId from "lodash.uniqueid";
 
 export default {
   name: "App",
@@ -56,10 +56,22 @@ export default {
       isEditing: false,
     };
   },
+  mounted() {
+    if (localStorage.getItem("todos"))
+      this.todos = JSON.parse(localStorage.getItem("todos"));
+  },
+  watch: {
+    todos: {
+      handler() {
+        localStorage.setItem("todos", JSON.stringify(this.todos));
+      },
+      deep: true,
+    },
+  },
   methods: {
     addTodo(newTodo) {
       const todoData = {
-        id: uniqueId(),
+        id: this.todos.length + 1,
         title: newTodo,
         completed: false,
       };

@@ -56,7 +56,7 @@
 export default {
   name: "TodoItem",
   props: {
-    id: { type: String },
+    id: { type: Number },
     title: { type: String },
     completed: { type: Boolean },
   },
