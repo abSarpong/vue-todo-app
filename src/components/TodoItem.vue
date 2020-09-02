@@ -4,7 +4,7 @@
       <div :class="{ completed: completed }" class="todo-style" :id="id">
         <span class="break-point">
           <input type="checkbox" :id="id" :checked="isCompleted" @change="$emit('mark-complete')" />
-          {{ todo }}
+          {{ todo.title }}
         </span>
         <span>
           <span class="edit-icon">
@@ -41,7 +41,7 @@
     <div v-else :isEditing="isEditing" class="edit-form-style">
       <form @submit.prevent="onEditSave" action>
         <br />
-        <input type="text" v-model="todo" />
+        <input type="text" v-model="todo.title" />
         <button type="submit" class="primary-button">Update</button>
         <button @click="cancelEditForm" type="submit" class="secondary-button">
           <span style="font-size: 20px"></span>
@@ -62,7 +62,10 @@ export default {
   },
   data() {
     return {
-      todo: this.title,
+      todo: {
+        id: this.id,
+        title: this.title
+      },
       isEditing: false,
     };
   },
@@ -70,11 +73,13 @@ export default {
     deleteTodo() {
       this.$emit("delete-todo");
     },
-    onEditSave(newTitle) {
-      if (this.title !== this.todo) {
-        this.$emit("add-edited-todo", newTitle);
+    onEditSave() {
+      // if (this.title !== this.todo) {
+      //   this.$emit("add-edited-todo", newTitle);
+      //   this.isEditing = false;
+      // }
+        this.$emit("add-edited-todo", this.todo);
         this.isEditing = false;
-      }
     },
     toggleEditForm() {
       this.isEditing = true;

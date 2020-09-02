@@ -11,7 +11,7 @@
             @delete-todo="deleteTodo(id)"
             @mark-complete="markComplete(id)"
             @toggle-todo-forms="toggleEditForm(id)"
-            @add-edited-todo="editTodo(id, title)"
+            @add-edited-todo="editTodo"
           />
         </div>
       </div>
@@ -57,16 +57,16 @@ export default {
     };
   },
   mounted() {
-    if (localStorage.getItem("todos"))
-      this.todos = JSON.parse(localStorage.getItem("todos"));
+    if (localStorage.todos)
+      this.todos = JSON.parse(localStorage.todos);
   },
   watch: {
     todos: {
-      handler() {
-        localStorage.setItem("todos", JSON.stringify(this.todos));
+      handler(title){
+        localStorage.todos = JSON.stringify(title);
       },
-      deep: true,
-    },
+      deep: true
+    }
   },
   methods: {
     addTodo(newTodo) {
@@ -90,9 +90,9 @@ export default {
       const todoIndex = this.todos.findIndex((item) => item.id === id);
       this.todos.splice(todoIndex, 1);
     },
-    editTodo(id, title) {
-      const todoToEdit = this.todos.find((item) => item.id === id);
-      todoToEdit.todo = title;
+    editTodo(todo) {
+      const todoToEdit = this.todos.find((item) => item.id === todo.id);
+      todoToEdit.title = todo.title;
     },
   },
   computed: {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form @submit.prevent="onSubmit" action>
+    <form @submit.prevent="onSubmit">
       <div class="form-style">
         <input type="text" v-model="title" placeholder="What's next?" />
         <button type="submit" class="primary-button">Add</button>
