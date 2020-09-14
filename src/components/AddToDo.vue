@@ -2,6 +2,8 @@
   <div>
     <form @submit.prevent="onSubmit">
       <div class="form-style">
+        <input type="text" v-model="newTodo" placeholder="What's next?" />
+        <button type="submit" class="primary-button">+ Add ToDo</button>
         <input type="text" v-model="title" placeholder="What's next?" />
         <button type="submit" class="primary-button">Add</button>
       </div>
@@ -10,6 +12,9 @@
 </template>
 
 <script>
+import { CREATE_TODOS } from "@/graphql/mutations";
+import { GET_ALL_TODOS } from "@/graphql/queries";
+
 export default {
   name: "AddToDo",
   data() {
@@ -18,6 +23,25 @@ export default {
     };
   },
   methods: {
+    async onSubmit() {
+      await this.$apollo.mutate({
+        mutation: CREATE_TODOS,
+        variables: {
+          title: this.newTodo,
+        },
+        update: (cache, { data: { insert_todos } }) => {
+          const data = cache.readQuery({
+            query: GET_ALL_TODOS,
+          });
+          const insertTodo = insert_todos.returning;
+          data.todos.push(insertTodo[0]);
+          cache.writeQuery({
+            query: GET_ALL_TODOS,
+            data,
+          });
+        },
+      });
+      this.newTodo = "";
     onSubmit() {
       this.$emit("add-new-todo", this.title);
       this.title = "";
@@ -40,6 +64,14 @@ input[type="text"] {
   border: 1px solid #cccccc;
   height: 40px;
 }
+input[type="text"]:focus {
+  margin: 8px 0 16px 0px;
+  padding: 8px 25px;
+  font-size: 20px;
+  margin-right: 8px;
+  width: 300px;
+  border: 1px solid #cccccc;
+  height: 40px;
 .edit-form-style {
   margin-bottom: 16px;
 }

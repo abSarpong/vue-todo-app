@@ -1,5 +1,9 @@
 <template>
   <div id="app">
+    <router-view />
+  </div>
+</template>
+
     <div class="wrapper">
       <add-to-do @add-new-todo="addTodo"></add-to-do>
       <div v-if="todoCount">
@@ -42,7 +46,6 @@
 <script>
 import AddToDo from "./components/AddToDo.vue";
 import TodoItem from "./components/TodoItem.vue";
-// import uniqueId from "lodash.uniqueid";
 
 export default {
   name: "App",
@@ -106,17 +109,23 @@ export default {
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
-}
-.wrapper {
-  width: 500px;
-  margin: 0 auto;
-  padding-top: 96px;
-}
-.empty-state {
-  display: flex;
-  justify-content: center;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  padding-top: 100px;
+  color: #2c3e50;
+}
+
+#nav {
+  padding: 30px;
+}
+
+#nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+#nav a.router-link-exact-active {
+  color: #42b983;
 }
 
 /* media queries */
