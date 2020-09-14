@@ -3,9 +3,7 @@
     <form @submit.prevent="onSubmit">
       <div class="form-style">
         <input type="text" v-model="newTodo" placeholder="What's next?" />
-        <button type="submit" class="primary-button">+ Add ToDo</button>
-        <input type="text" v-model="title" placeholder="What's next?" />
-        <button type="submit" class="primary-button">Add</button>
+        <button type="submit" class="primary-button">Add ToDo</button>
       </div>
     </form>
   </div>
@@ -19,7 +17,7 @@ export default {
   name: "AddToDo",
   data() {
     return {
-      title: "",
+      newTodo: "",
     };
   },
   methods: {
@@ -42,9 +40,6 @@ export default {
         },
       });
       this.newTodo = "";
-    onSubmit() {
-      this.$emit("add-new-todo", this.title);
-      this.title = "";
     },
   },
 };
@@ -72,6 +67,7 @@ input[type="text"]:focus {
   width: 300px;
   border: 1px solid #cccccc;
   height: 40px;
+}
 .edit-form-style {
   margin-bottom: 16px;
 }
