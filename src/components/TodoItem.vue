@@ -59,13 +59,6 @@ export default {
     title: { type: String },
     completed: { type: Boolean },
   },
-  data() {
-    return {
-      editMode: false,
-      // todos: [],
-      isComp: false,
-    };
-  },
   apollo: {
     todos: {
       query: GET_ALL_TODOS,

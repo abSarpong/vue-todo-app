@@ -13,7 +13,6 @@
         <button type="submit" class="primary-button">Update</button>
       </div>
     </form>
-    {{todoDetails.title}}
   </div>
 </template>
 
