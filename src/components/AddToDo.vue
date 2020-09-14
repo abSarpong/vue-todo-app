@@ -1,9 +1,11 @@
 <template>
   <div>
-    <form @submit.prevent="onSubmit" action>
+    <form @submit.prevent="onSubmit">
       <div class="form-style">
         <input type="text" v-model="newTodo" placeholder="What's next?" />
         <button type="submit" class="primary-button">+ Add ToDo</button>
+        <input type="text" v-model="title" placeholder="What's next?" />
+        <button type="submit" class="primary-button">Add</button>
       </div>
     </form>
   </div>
@@ -14,10 +16,10 @@ import { CREATE_TODOS } from "@/graphql/mutations";
 import { GET_ALL_TODOS } from "@/graphql/queries";
 
 export default {
-  name: "AddTodo",
+  name: "AddToDo",
   data() {
     return {
-      newTodo: "",
+      title: "",
     };
   },
   methods: {
@@ -40,6 +42,9 @@ export default {
         },
       });
       this.newTodo = "";
+    onSubmit() {
+      this.$emit("add-new-todo", this.title);
+      this.title = "";
     },
   },
 };
@@ -67,6 +72,8 @@ input[type="text"]:focus {
   width: 300px;
   border: 1px solid #cccccc;
   height: 40px;
+.edit-form-style {
+  margin-bottom: 16px;
 }
 ::placeholder {
   font-size: 16px;
