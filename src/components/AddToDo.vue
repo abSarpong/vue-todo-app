@@ -11,6 +11,7 @@
 
 <script>
 import { CREATE_TODOS } from "@/graphql/mutations";
+import { GET_ALL_TODOS } from "@/graphql/queries";
 
 export default {
   name: "AddTodo",
@@ -25,6 +26,17 @@ export default {
         mutation: CREATE_TODOS,
         variables: {
           title: this.newTodo,
+        },
+        update: (cache, { data: { insert_todos } }) => {
+          const data = cache.readQuery({
+            query: GET_ALL_TODOS,
+          });
+          const insertTodo = insert_todos.returning;
+          data.todos.push(insertTodo[0]);
+          cache.writeQuery({
+            query: GET_ALL_TODOS,
+            data,
+          });
         },
       });
       this.newTodo = "";
